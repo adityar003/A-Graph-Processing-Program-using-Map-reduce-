@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH -A uot143
+#SBATCH --job-name="multiply.local"
+#SBATCH --output="multiply.local.out"
+#SBATCH --partition=shared
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --export=ALL 
+#SBATCH --time=10
+
+module load hadoop/2.6.0 spark/1.5.2
+
+rm -rf output
+spark-submit --class Multiply --master local[2] multiply.jar M-matrix-small.txt N-matrix-small.txt output
